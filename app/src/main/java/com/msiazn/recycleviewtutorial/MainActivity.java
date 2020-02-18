@@ -1,6 +1,7 @@
 package com.msiazn.recycleviewtutorial;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ModelItem> list;
 
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
+    ModelItemAdapter adapter;
     RecyclerView.LayoutManager manager;
 
     @Override
@@ -50,10 +51,21 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ModelItemAdapter(list);
         manager = new LinearLayoutManager(this);
 
+        adapter.setOnItemClickListener(new ModelItemAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClicked(int position) {
+                makeToast(position);
+            }
+        });
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
 
+    }
+
+    private void makeToast(int pos) {
+        Toast.makeText(this, "Position is" + pos, Toast.LENGTH_SHORT).show();
     }
 }
